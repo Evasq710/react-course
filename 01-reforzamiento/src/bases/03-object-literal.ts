@@ -1,4 +1,19 @@
-const ironman = {
+// interface -> Propio sólo de TypeScript
+// Cuando ocurra la transpilación (pasar de TS a JS), estas no se trasladarán
+interface Person {
+    firstName: string;
+    lastName: string;
+    age: number;
+    address: Address;
+}
+
+interface Address {
+    postalCode: string;
+    city: string;
+}
+
+
+const ironman: Person = {
     firstName: 'Tony',
     lastName: 'Stark',
     age: 45,

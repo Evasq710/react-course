@@ -1,5 +1,5 @@
 
-interface Hero {
+export interface Hero {
     id: number;
     name: string;
     owner: Owner; // custom type
@@ -8,7 +8,7 @@ interface Hero {
 // TYPE
 // Se puede usar para definir una serie de posibles valores
 // No tiene una contraparte en JS
-type Owner = 'DC' | 'Marvel';
+export type Owner = 'DC' | 'Marvel' | 'Other';
 
 // WARNING: enum's son marcados como error cuando la flag `erasableSyntaxOnly` se encuentra activa
 // enum Owner {
@@ -16,7 +16,11 @@ type Owner = 'DC' | 'Marvel';
 //     Marvel //1
 // }
 
-const heroes: Hero[] = [
+/**
+ * Al tener esta exportación independiente, la importación puede hacerse como sigue, en donde el nombre sí importa:
+ * import { heroes } from "../data/heroes.data"
+ */
+export const heroes: Hero[] = [
     {
         id: 1,
         name: 'Batman',
@@ -48,3 +52,10 @@ const heroes: Hero[] = [
     //     owner: 'Marvel Comics', // daría error
     // },
 ]
+
+
+/**
+ * Al tener esta exportación por defecto, la importación puede hacerse como sigue:
+ * import nombreIrrelevante from "../data/heroes.data"
+ */
+// export default heroes;

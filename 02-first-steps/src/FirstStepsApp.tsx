@@ -1,14 +1,23 @@
 
+import type { CSSProperties } from "react";
+
 /** Si las variables no cambian, se aconseja que se encuentren fuera del componente de React, para que no se esté refrescando constantemente */
 
 const firstName = 'Elías';
 const favoriteGames = ['Elden Ring', 'Smash', 'Metal Gear'];
 
-const booleanVar = true;
+const booleanVar = false; // Cambiar
 
 const address = {
     zipCode: 'ABC-132',
     country: 'Cánada'
+};
+
+// Se declara como CSSProperties para tener ayuda del IntelliSense a la hora de agregar más atributos (autocompletado)
+const myStiles: CSSProperties = {
+    backgroundColor: 'yellow',
+    color: booleanVar ? 'green' : 'purple',
+    padding: 15
 };
 
 export const FirstStepsApp = () => {
@@ -20,12 +29,23 @@ export const FirstStepsApp = () => {
             <p>Mostrando un arreglo tal cual (todo pegado): {favoriteGames}</p>
             <p>Mostrando un arreglo formateado: {favoriteGames.join(', ')}</p>
             <br />
+
             <p>Booleano: {booleanVar}</p> {/** Sin representación */}
             <p>Ternario: {booleanVar ? 'VERDADERO' : 'FALSO'}</p>
             <br />
+
             {/* <p>Objeto: {address}</p> */}  {/* <---- Esto no se puede */}
             <p>Objeto: {address.toString()}</p> {/* [object Object] */}
-            <p>Objeto como cadena: {JSON.stringify(address)}</p> {/** {"zipCode":"ABC-132","country":"Cánada"} */}
+            <p
+                // style={{
+                //     backgroundColor: 'yellow',
+                //     color: booleanVar ? 'green' : 'purple',
+                //     padding: 15
+                // }}
+                style={myStiles}
+            >
+                Objeto como cadena: {JSON.stringify(address)}
+            </p> {/** {"zipCode":"ABC-132","country":"Cánada"} */}
         </>
     );
 }

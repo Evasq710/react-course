@@ -1,13 +1,27 @@
+import { useState } from "react";
 
 interface ItemCounterProps {
     productName: string,
     quantity: number | undefined // Para obligar que se envíe pero como undefined (quantity? vuelve a la prop opcional)
 }
 
-export const ItemCounter = ({ productName, quantity }: ItemCounterProps) => {
+/**
+ * - Hooks: Funciones que permiten a los componentes usar el estado y otras características de React (useState, useEffect, useContext)
+ */
 
-    const handleClick = () => {
-        console.log(`Click on: ${productName}`);
+export const ItemCounter = ({ productName, quantity = 1 }: ItemCounterProps) => {
+    /** Los Hooks deben de colocarse al inicio */
+
+    const [count, setCount] = useState(quantity); // useState(init) retorna: [number, React.Dispatch<React.SetStateAction<number>>]
+
+    const handleClickSubtract = () => {
+        if (count === 1) return; // Impidiendo que el contador baje de 1
+
+        setCount(count - 1); // La función dispatcher hace que se vuelva a dibujar el componente
+    }
+
+    const handleClickAdd = () => {
+        setCount(count + 1); // La función dispatcher hace que se vuelva a dibujar el componente
     }
 
     return (
@@ -19,17 +33,18 @@ export const ItemCounter = ({ productName, quantity }: ItemCounterProps) => {
         }}>
             <span style={{
                 width: 150,
+                color: count === 1 ? 'red' : 'black',
             }}>
                 {productName}
             </span>
             <button
-                onClick={handleClick}
+                onClick={handleClickSubtract}
             >
                 -1
             </button>
-            <span>{quantity}</span>
+            <span>{count}</span>
             <button
-                onClick={() => { }}
+                onClick={handleClickAdd}
             >
                 +1
             </button>

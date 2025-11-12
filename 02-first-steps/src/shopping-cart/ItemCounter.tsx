@@ -5,6 +5,11 @@ interface ItemCounterProps {
 }
 
 export const ItemCounter = ({ productName, quantity }: ItemCounterProps) => {
+
+    const handleClick = () => {
+        console.log(`Click on: ${productName}`);
+    }
+
     return (
         <section style={{
             display: 'flex',
@@ -17,9 +22,17 @@ export const ItemCounter = ({ productName, quantity }: ItemCounterProps) => {
             }}>
                 {productName}
             </span>
-            <button>-1</button>
+            <button
+                onClick={handleClick}
+            >
+                -1
+            </button>
             <span>{quantity}</span>
-            <button>+1</button>
+            <button
+                onClick={() => { }}
+            >
+                +1
+            </button>
         </section>
     )
 }

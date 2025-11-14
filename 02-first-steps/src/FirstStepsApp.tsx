@@ -25,13 +25,13 @@ export const FirstStepsApp = () => {
     /** Aunque se podían declarar las variables aquí, se aconseja que si son constantes, se declaren afuera del componente */
 
     return (
-        <>
+        <div data-testid="div-app">
             <h1>Hola mundo :D</h1>
             <h2 data-testid="first-name-title">{firstName}</h2>
             <h3>{lastName}</h3>
             <br />
-            <h2>Un h2 x</h2>
             <h3>Un h3 x</h3>
+            <h2>Un h2 x</h2>
 
             <p>Mostrando un arreglo tal cual (todo pegado): {favoriteGames}</p>
             <p>Mostrando un arreglo formateado: {favoriteGames.join(', ')}</p>
@@ -42,7 +42,7 @@ export const FirstStepsApp = () => {
             <br />
 
             {/* <p>Objeto: {address}</p> */}  {/* <---- Esto no se puede */}
-            <p>Objeto: {address.toString()}</p> {/* [object Object] */}
+            <p className="my-favorite-class">Objeto: {address.toString()}</p> {/* [object Object] */}
             <p
                 // style={{
                 //     backgroundColor: 'yellow',
@@ -53,7 +53,7 @@ export const FirstStepsApp = () => {
             >
                 Objeto como cadena: {JSON.stringify(address)}
             </p> {/** {"zipCode":"ABC-132","country":"Cánada"} */}
-        </>
+        </div>
     );
 }
 

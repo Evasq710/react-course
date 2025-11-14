@@ -1,0 +1,123 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`FirstStepsApp > should match snapshot - screen 1`] = `
+<div
+  data-testid="div-app"
+>
+  <h1>
+    Hola mundo :D
+  </h1>
+  <h2
+    data-testid="first-name-title"
+  >
+    Elías
+  </h2>
+  <h3>
+    Vasquez
+  </h3>
+  <br />
+  <h3>
+    Un h3 x
+  </h3>
+  <h2>
+    Un h2 x
+  </h2>
+  <p>
+    Mostrando un arreglo tal cual (todo pegado): 
+    Elden Ring
+    Smash
+    Metal Gear
+  </p>
+  <p>
+    Mostrando un arreglo formateado: 
+    Elden Ring, Smash, Metal Gear
+  </p>
+  <br />
+  <p>
+    Booleano: 
+  </p>
+   
+  <p>
+    Ternario: 
+    FALSO
+  </p>
+  <br />
+    
+  <p
+    class="my-favorite-class"
+  >
+    Objeto: 
+    [object Object]
+  </p>
+   
+  <p
+    style="background-color: yellow; color: purple; padding: 15px;"
+  >
+    Objeto como cadena: 
+    {"zipCode":"ABC-132","country":"Cánada"}
+  </p>
+   
+</div>
+`;
+
+exports[`FirstStepsApp > should match snapshot 1`] = `
+<div>
+  <div
+    data-testid="div-app"
+  >
+    <h1>
+      Hola mundo :D
+    </h1>
+    <h2
+      data-testid="first-name-title"
+    >
+      Elías
+    </h2>
+    <h3>
+      Vasquez
+    </h3>
+    <br />
+    <h3>
+      Un h3 x
+    </h3>
+    <h2>
+      Un h2 x
+    </h2>
+    <p>
+      Mostrando un arreglo tal cual (todo pegado): 
+      Elden Ring
+      Smash
+      Metal Gear
+    </p>
+    <p>
+      Mostrando un arreglo formateado: 
+      Elden Ring, Smash, Metal Gear
+    </p>
+    <br />
+    <p>
+      Booleano: 
+    </p>
+     
+    <p>
+      Ternario: 
+      FALSO
+    </p>
+    <br />
+      
+    <p
+      class="my-favorite-class"
+    >
+      Objeto: 
+      [object Object]
+    </p>
+     
+    <p
+      style="background-color: yellow; color: purple; padding: 15px;"
+    >
+      Objeto como cadena: 
+      {"zipCode":"ABC-132","country":"Cánada"}
+    </p>
+     
+  </div>
+</div>
+`;

@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, test } from "vitest";
 import { ItemCounter } from "./ItemCounter";
 
@@ -14,7 +14,7 @@ describe('ItemCounter', () => {
     expect(screen.getByText(name)).toBeDefined();
     // expect(screen.getByText(name)).not.toBeUndefined();
     expect(screen.getByTestId("quantity-value")?.innerHTML).toEqual("1"); // valor por defecto
-  })
+  });
 
   test('shoul render with custom quantity', () => {
 
@@ -25,5 +25,38 @@ describe('ItemCounter', () => {
     // screen.debug();
 
     expect(screen.getByTestId("quantity-value")).toBeDefined();
-  })
+  });
+
+  test('should increase count when +1 button is pressed', () => {
+    render(<ItemCounter productName="Test item" quantity={1} />);
+
+    // Tomando todos los botones > desestructuración para sólo tomar el ADD
+    const [, buttonAdd] = screen.getAllByRole('button');
+
+    fireEvent.click(buttonAdd);
+
+    expect(screen.getByTestId("quantity-value")?.innerHTML).toEqual("2");
+  });
+
+  test('should decrease count when -1 button is pressed', () => {
+    render(<ItemCounter productName="Test item" quantity={2} />);
+
+    // Tomando todos los botones > desestructuración para sólo tomar el SUBTRACT
+    const [buttonSubtract] = screen.getAllByRole('button');
+
+    fireEvent.click(buttonSubtract);
+
+    expect(screen.getByTestId("quantity-value")?.innerHTML).toEqual("1");
+  });
+
+  test("shouldn't decrease count when -1 button is pressed and quantity is 1", () => {
+    render(<ItemCounter productName="Test item" quantity={1} />);
+
+    // Tomando todos los botones > desestructuración para sólo tomar el SUBTRACT
+    const [buttonSubtract] = screen.getAllByRole('button');
+
+    fireEvent.click(buttonSubtract);
+
+    expect(screen.getByTestId("quantity-value")?.innerHTML).toEqual("1");
+  });
 })

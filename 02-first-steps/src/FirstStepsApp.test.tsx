@@ -8,6 +8,10 @@ describe('FirstStepsApp', () => {
   test('should render firstName and lastName', () => {
     // Para que podamos acceder a este "test DOM", se debe configurar "vite.config.ts" con "jsdom" en environment
     const { container } = render(<FirstStepsApp />);
+
+    // CONTAINER es un elemento HTML estático del renderizado inicial, mientras que 
+    // SCREEN siempre apunta al estado actual del DOM y se actualiza después de los eventos
+
     // screen.debug();
     // console.log(container.innerHTML);
 

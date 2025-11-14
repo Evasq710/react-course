@@ -4,6 +4,7 @@ import type { CSSProperties } from "react";
 /** Si las variables no cambian, se aconseja que se encuentren fuera del componente de React, para que no se esté refrescando constantemente */
 
 const firstName = 'Elías';
+const lastName = 'Vasquez';
 const favoriteGames = ['Elden Ring', 'Smash', 'Metal Gear'];
 
 const booleanVar = false; // Cambiar
@@ -25,7 +26,13 @@ export const FirstStepsApp = () => {
 
     return (
         <>
-            <h1>Hola mundo :D Soy {firstName}</h1>
+            <h1>Hola mundo :D</h1>
+            <h2 data-testid="first-name-title">{firstName}</h2>
+            <h3>{lastName}</h3>
+            <br />
+            <h2>Un h2 x</h2>
+            <h3>Un h3 x</h3>
+
             <p>Mostrando un arreglo tal cual (todo pegado): {favoriteGames}</p>
             <p>Mostrando un arreglo formateado: {favoriteGames.join(', ')}</p>
             <br />

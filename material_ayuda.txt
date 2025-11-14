@@ -2,4 +2,8 @@ gist: https://gist.github.com/Klerith/babd55ca1526ac882882888f75de208f
 
 ===== COMANDOS ======
 
+# para pruebas unitarias (-D == --save-dev)
 npm i -D vitest
+
+# para pruebas de componentes de React
+npm install --save-dev @testing-library/react @testing-library/dom @types/react @types/react-dom

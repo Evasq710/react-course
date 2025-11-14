@@ -1,0 +1,38 @@
+import { describe, expect, test } from "vitest";
+import { render, screen } from '@testing-library/react'
+import { FirstStepsApp } from "./FirstStepsApp";
+
+
+describe('FirstStepsApp', () => {
+
+  test('should render firstName and lastName', () => {
+    // Para que podamos acceder a este "test DOM", se debe configurar "vite.config.ts" con "jsdom" en environment
+    const { container } = render(<FirstStepsApp />);
+    // screen.debug();
+    // console.log(container.innerHTML);
+
+    // Regresa el primer elemento que encuentre
+    const h2 = container.querySelector('h2');
+    const h3 = container.querySelector('h3');
+
+    expect(h2?.innerHTML).toContain('Elías');
+    expect(h3?.innerHTML).toContain('Vasquez');
+
+  });
+
+  test('should render firstName and lastName - screen', () => {
+    render(<FirstStepsApp />);
+    // screen.debug();
+
+    // Falla si encuentra múltiples elementos que cumplan con el criterio solicitado
+    // const h2 = screen.getByRole('heading', {
+    //   level: 2
+    // })
+
+    // Para que esto funcione, se debe indicar el id del elemento con la propiedad data-testid
+    const h2 = screen.getByTestId("first-name-title");
+
+    expect(h2?.innerHTML).toContain('Elías');
+  });
+
+});

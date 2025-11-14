@@ -5,7 +5,7 @@ import styles from './ItemCounter.module.css' // IMPORTACIÓN DE CSS COMO MÓDUL
 
 interface ItemCounterProps {
     productName: string,
-    quantity: number | undefined // Para obligar que se envíe pero como undefined (quantity? vuelve a la prop opcional)
+    quantity?: number // Se puede poner number | undefined para obligar que se envíe pero como undefined (quantity? vuelve a la prop opcional)
 }
 
 /**
@@ -63,7 +63,7 @@ export const ItemCounter = ({ productName, quantity = 1 }: ItemCounterProps) => 
             >
                 -1
             </button>
-            <span>{count}</span>
+            <span data-testid="quantity-value">{count}</span>
             <button
                 onClick={handleClickAdd}
             >

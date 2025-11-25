@@ -14,6 +14,7 @@ export const mockGifs: Gif[] = [
     width: 300,
     height: 300,
   },
+  /*
   {
     id: '2',
     title: "Funny Cat",
@@ -49,4 +50,5 @@ export const mockGifs: Gif[] = [
     width: 350,
     height: 280,
   },
+  */
 ]

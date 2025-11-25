@@ -10,7 +10,7 @@ export const mockGifs: Gif[] = [
   {
     id: '1',
     title: "Superman's Cake",
-    url: '',
+    url: 'https://media0.giphy.com/media/v1.Y21kPTc5MGI3NjExZWVxbHY0dncxMHJ1ZXRvOTY3MX15cHp0dWs4aG5iY3d0ZWh1cDM5diZ1cD12MV9pbnR1cm5hbF9naWZ',
     width: 300,
     height: 300,
   },

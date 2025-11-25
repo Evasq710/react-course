@@ -14,6 +14,18 @@ export const GifsApp = () => {
     console.log({ term });
   }
 
+  const handleSearch = (query: string) => {
+    const formattedQuery = query.trim().toLowerCase();
+
+    if (formattedQuery === '') return;
+    if (previousTerms.includes(formattedQuery)) return;
+
+    setPreviousTerms(actualTerms => {
+      // Restricting previousTerms.length to 8 elements
+      return [formattedQuery, ...actualTerms.splice(0, 7)]
+    });
+  }
+
   return (
     <>
       {/* Header */}
@@ -25,6 +37,7 @@ export const GifsApp = () => {
       {/* Search */}
       <SearchBar
         placeholder="Busca lo que quieras"
+        onQuery={handleSearch}
       />
 
       {/* Búsquedas previas */}

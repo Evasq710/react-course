@@ -5,7 +5,7 @@ import { giphyApi } from "../api/giphy.api";
 export const getGifsByQueryAction = async (query: string): Promise<Gif[]> => {
   /**
    * API Request to Giphy
-   * giphyApi already has baseURL and common params (lang, api_key)
+   * giphyApi (an AxiosInstance instnace) already has baseURL and common params (lang, api_key)
    */
   const response = await giphyApi<GiphyResponse>('/search', {
     params: {

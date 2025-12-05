@@ -1,21 +1,28 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import type { Gif } from "../interfaces/gif.interface";
 import { getGifsByQueryAction } from "../actions/get-gifs-by-query.action";
 
-// Record: key: string, value: Gif[]
+/*
+// A way to persist data between hook calls
 // We are taking out the cache from the hook state, so it doesn't reset on each hook call
 // (This reset happens when the component using the hook re-renders)
+// Record: key: string, value: Gif[]
 const gifsCache: Record<string, Gif[]> = {};
-
+*/
 
 export const useGifs = () => {
 
   const [gifs, setGifs] = useState<Gif[]>([]);
   const [previousTerms, setPreviousTerms] = useState<string[]>([]);
 
+  // Another way to persist data between hook calls
+  // useRef returns a mutable ref object whose .current property is initialized to the passed argument
+  // The returned object will persist for the full lifetime of the hook and won't produce re-renders when its content changes
+  const gifsCache = useRef<Record<string, Gif[]>>({});
+
   const handleTermClicked = async (term: string) => {
-    if (gifsCache[term]) {
-      setGifs(gifsCache[term]);
+    if (gifsCache.current[term]) {
+      setGifs(gifsCache.current[term]);
       return;
     }
 
@@ -33,7 +40,7 @@ export const useGifs = () => {
       // Deleting the oldest term from cache if we were to exceed 8 terms
       if (actualTerms.length == 8) {
         const termToDelete = actualTerms[actualTerms.length - 1];
-        delete gifsCache[termToDelete];
+        delete gifsCache.current[termToDelete];
       }
 
       // Restricting previousTerms.length to 8 elements
@@ -44,8 +51,7 @@ export const useGifs = () => {
     setGifs(gifs);
 
     // Caching the results
-    gifsCache[formattedQuery] = gifs;
-    console.log({ gifsCache });
+    gifsCache.current[formattedQuery] = gifs;
   }
 
   return {

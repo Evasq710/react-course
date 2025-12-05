@@ -5,8 +5,20 @@ gist: https://gist.github.com/Klerith/babd55ca1526ac882882888f75de208f
 # Init project
 npm create vite@latest
 
+# Axios Installation
+npm i axios
+
 # para pruebas unitarias (-D == --save-dev)
 npm i -D vitest
 
 # para pruebas de componentes de React
 npm install --save-dev @testing-library/react @testing-library/dom @types/react @types/react-dom
+
+# Un sólo comando para configurar entorno de pruebas
+npm install --save-dev @testing-library/react @testing-library/dom vitest jsdom 
+
+# When the project is built, we can run a static HTTP server 
+# Installation:
+sudo npm install --global http-server
+# Launch a server inside our dist foler:
+http-server -o

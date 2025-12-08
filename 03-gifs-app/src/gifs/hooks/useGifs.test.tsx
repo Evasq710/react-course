@@ -1,6 +1,7 @@
 import { act, renderHook } from "@testing-library/react";
-import { describe, expect, test } from "vitest";
+import { describe, expect, test, vi } from "vitest";
 import { useGifs } from "./useGifs";
+import * as gifActions from "../actions/get-gifs-by-query.action";
 
 describe('useGifs', () => {
 
@@ -32,6 +33,26 @@ describe('useGifs', () => {
     });
 
     expect(result.current.gifs.length).toBe(10);
+  });
+
+  test('should return a list of gifs from cache', async () => {
+    const { result } = renderHook(() => useGifs());
+
+    await act(async () => {
+      await result.current.handleTermClicked('batman');
+    });
+
+    expect(result.current.gifs.length).toBe(10);
+
+    const actionMock = vi.spyOn(gifActions, 'getGifsByQueryAction')
+      .mockRejectedValue(new Error('This is my custom error'));
+
+    await act(async () => {
+      await result.current.handleTermClicked('batman');
+    });
+
+    expect(result.current.gifs.length).toBe(10);
+    expect(actionMock).not.toHaveBeenCalled();
   });
 
 });

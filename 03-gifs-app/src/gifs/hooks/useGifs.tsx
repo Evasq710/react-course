@@ -34,6 +34,8 @@ export const useGifs = () => {
     const formattedQuery = query.trim().toLowerCase();
 
     if (formattedQuery === '') return;
+
+    // TODO: Is this return ok? 
     if (previousTerms.includes(formattedQuery)) return;
 
     setPreviousTerms(actualTerms => {

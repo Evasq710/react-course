@@ -1,4 +1,4 @@
-import { describe, expect, test } from "vitest";
+import { beforeEach, describe, expect, test, vi } from "vitest";
 import { getGifsByQueryAction } from "./get-gifs-by-query.action";
 import AxiosMockAdapter from 'axios-mock-adapter';
 import { giphyApi } from "../api/giphy.api";
@@ -7,6 +7,12 @@ import { giphySearchResponseMock } from "../../mock-data/giphy.response.data";
 describe("getGifsByQuery", () => {
 
   const axiosMock = new AxiosMockAdapter(giphyApi);
+
+  beforeEach(() => {
+    // Reset any previous handlers
+    // This is necessary, because we are using the same axiosMock instance in multiple tests
+    axiosMock.reset();
+  });
 
   test('should return a list of gifs', async () => {
     // Overriding the default axios instance behavior
@@ -28,4 +34,29 @@ describe("getGifsByQuery", () => {
       })
     })
   });
+
+  test('should return an empty list if query is empty', async () => {
+    const gifs = await getGifsByQueryAction('');
+
+    expect(gifs.length).toBe(0);
+  });
+
+  test('should handle error when the API returns an error', async () => {
+    // Replacing console.error with a dummy function
+    const consoleErrorSpy = vi.spyOn(console, 'error')
+      .mockImplementation(() => { })
+
+    axiosMock.onGet('/search').reply(400, {
+      data: {
+        message: 'Bad request'
+      }
+    });
+
+    const gifs = await getGifsByQueryAction('batman');
+
+    expect(gifs.length).toBe(0);
+    expect(consoleErrorSpy).toHaveBeenCalled();
+    expect(consoleErrorSpy).toHaveBeenCalledWith(expect.anything());
+  });
+
 });

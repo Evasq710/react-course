@@ -1,16 +1,20 @@
 import { useState } from "react"
 
+const colors = {
+  red: 'bg-red-500 animate-pulse',
+  yellow: 'bg-yellow-500 animate-pulse',
+  green: 'bg-green-500 animate-pulse',
+}
+
+// If we add a new color in the colors object, it will be recognized as a new valid string type
+type TrafficLightColor = keyof typeof colors;
+
+// type TrafficLightColor = 'red' | 'yellow' | 'green';
+
+
 export const TrafficLight = () => {
 
-  type colors = 'red' | 'yellow' | 'green';
-
-  const [light, setLight] = useState<colors>('red');
-
-  const colors = {
-    red: 'bg-red-500 animate-pulse',
-    yellow: 'bg-yellow-500 animate-pulse',
-    green: 'bg-green-500 animate-pulse',
-  }
+  const [light, setLight] = useState<TrafficLightColor>('red');
 
   return (
     <div className="bg-gradient">

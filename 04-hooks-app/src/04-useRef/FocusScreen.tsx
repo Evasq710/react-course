@@ -2,7 +2,7 @@ import { useRef } from "react"
 
 export const FocusScreen = () => {
 
-  // Another way to persist data between hook calls
+  // A way to persist data between hook calls
   // useRef returns a mutable ref object whose .current property is initialized to the passed argument
   // The returned object will persist for the full lifetime of the hook and won't produce re-renders when its content changes
   const inputRef = useRef<HTMLInputElement>(null);

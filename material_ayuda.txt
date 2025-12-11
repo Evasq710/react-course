@@ -11,6 +11,13 @@ npm i axios
 # Tailwind CSS Installation
 npm i tailwindcss @tailwindcss/vite
 
+# shadcn Installation (a set of components for React that uses a CODE DISTRIBUTION SYSTEM; it uses Tailwind CSS)
+npm i -D @types/node
+# npx > node package execute ...
+npx shadcn@latest init 
+# Adding components to project
+npx shadcn@latest add
+
 # para pruebas unitarias (-D == --save-dev)
 npm i -D vitest
 

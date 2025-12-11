@@ -19,12 +19,21 @@ export type TaskAction =
   | { type: 'DELETE_TODO', payload: number };
 
 
-export const getTaskInitialState = (): TaskState => ({
-  todos: [],
-  length: 0,
-  completed: 0,
-  pending: 0,
-});
+export const getTaskInitialState = (): TaskState => {
+  const localStorageState = localStorage.getItem('task-state');
+
+  if (!localStorageState) {
+    return {
+      todos: [],
+      length: 0,
+      completed: 0,
+      pending: 0,
+    };
+  }
+
+  // TODO: Validar que el objeto no haya sido modificado
+  return JSON.parse(localStorageState);
+}
 
 
 // Función pura que retorna un nuevo estado TaskState

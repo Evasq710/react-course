@@ -19,6 +19,14 @@ export type TaskAction =
   | { type: 'DELETE_TODO', payload: number };
 
 
+export const getTaskInitialState = (): TaskState => ({
+  todos: [],
+  length: 0,
+  completed: 0,
+  pending: 0,
+});
+
+
 // Función pura que retorna un nuevo estado TaskState
 export const tasksReducer = (state: TaskState, action: TaskAction): TaskState => {
   switch (action.type) {
@@ -53,7 +61,10 @@ export const tasksReducer = (state: TaskState, action: TaskAction): TaskState =>
     case "TOGGLE_TODO": {
       const updatedTodos = state.todos.map(todo => {
         if (todo.id === action.payload) {
-          todo.completed = !todo.completed;
+          return {
+            ...todo,
+            completed: !todo.completed,
+          }
         }
         return todo;
       });

@@ -18,6 +18,9 @@ npx shadcn@latest init
 # Adding components to project
 npx shadcn@latest add
 
+# Zod for TypeScrfipt SCHEMA VALIDATION 
+npm install zod
+
 # para pruebas unitarias (-D == --save-dev)
 npm i -D vitest
 

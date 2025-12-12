@@ -2,74 +2,46 @@
 // Es necesario componentes de Shadcn/ui
 // https://ui.shadcn.com/docs/installation/vite
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useReducer } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent } from '@/components/ui/card';
 import { SkipForward, Play } from 'lucide-react';
 import confetti from 'canvas-confetti'
-
-const GAME_WORDS = [
-  'REACT',
-  'JAVASCRIPT',
-  'TYPESCRIPT',
-  'HTML',
-  'ANGULAR',
-  'SOLID',
-  'NODE',
-  'VUEJS',
-  'SVELTE',
-  'EXPRESS',
-  'MONGODB',
-  'POSTGRES',
-  'DOCKER',
-  'KUBERNETES',
-  'WEBPACK',
-  'VITE',
-  'TAILWIND',
-];
-
-// Esta función mezcla el arreglo para que siempre sea aleatorio
-const shuffleArray = (array: string[]) => {
-  return array.sort(() => Math.random() - 0.5);
-};
-
-// Esta función mezcla las letras de la palabra
-const scrambleWord = (word: string = '') => {
-  return word
-    .split('')
-    .sort(() => Math.random() - 0.5)
-    .join('');
-};
+import { getInitialState, scrambleWordsReducer } from './reducer/scrambleWordsReducer';
 
 export const ScrambleWords = () => {
-  // LAZY INITIALIZATION
-  // Instead of passing a initial value directly, we pass a function that React will execute once, on the initial rendering, if the state is needed
-  const [words, setWords] = useState(() => shuffleArray(GAME_WORDS));
-  // const [words, setWords] = useState(shuffleArray(GAME_WORDS));
 
-  const [currentWord, setCurrentWord] = useState('');
-  const [scrambledWord, setScrambledWord] = useState('');
-  const [guess, setGuess] = useState('');
-  const [points, setPoints] = useState(0);
-  const [errorCounter, setErrorCounter] = useState(0);
-  const [maxAllowErrors, setMaxAllowErrors] = useState(3);
+  /**
+   * useReducer: An alternative to useState.
+   * @param reducer: Pure reducer function that accepts the current state and an action as arguments, returning the next state
+   * @param initialArg: initial state
+   * @returns an array with 2 values:
+   * - The CURRENT STATE
+   * - The DISPATCH FUNCTION, that accepts an action, allowing us to update the state and trigger a re-render.
+   * > React will establish the next state to the result of calling the reducer function with the current state and the action passed to the dispatch
+   * 
+   * > useState for simple states (counters, booleans, etc.)
+   * > useReducer for more complex states, and when a state depends on another one
+   */
+  const [state, dispatch] = useReducer(scrambleWordsReducer, getInitialState());
 
-  const [skipCounter, setSkipCounter] = useState(0);
-  const [maxSkips, setMaxSkips] = useState(3);
+  const {
+    words,
+    currentWord,
+    scrambledWord,
+    guess,
+    points,
+    errorCounter,
+    maxAllowErrors,
+    skipCounter,
+    maxSkips,
+    isGameOver,
+    totalWords,
+  } = state;
 
-  const [isGameOver, setIsGameOver] = useState(false);
-
-  const handleGuessSubmit = (e: React.FormEvent) => {
-    // Previene el refresh de la página
-    e.preventDefault();
-
-    setGuess('');
-
-    if (guess !== currentWord) {
-      setErrorCounter(prev => prev + 1);
-      return;
-    }
+  useEffect(() => {
+    if (points === 0) return;
 
     // Confetti
     // npm install canvas-confetti
@@ -78,35 +50,23 @@ export const ScrambleWords = () => {
       spread: 120,
       origin: { y: 0.6 }
     });
+  }, [points])
 
-    setPoints(prev => prev + 1);
-    setWords(prev => prev.slice(1));
+  const handleGuessSubmit = (e: React.FormEvent) => {
+    // Previene el refresh de la página
+    e.preventDefault();
+
+    dispatch({ type: 'CHECK_ANSWER' });
 
   };
 
   const handleSkip = () => {
-    if (skipCounter >= maxSkips) return;
-
-    setSkipCounter(prev => prev + 1);
-    setWords(prev => prev.slice(1));
+    dispatch({ type: 'SKIP_WORD' });
   };
 
   const handlePlayAgain = () => {
-    setWords(shuffleArray(GAME_WORDS));
-    setPoints(0);
-    setErrorCounter(0);
-    setSkipCounter(0);
+    dispatch({ type: 'START_NEW_GAME', payload: getInitialState() })
   };
-
-  useEffect(() => {
-    const actualWord = words.length > 0 ? words[0] : '';
-    setCurrentWord(actualWord);
-    setScrambledWord(scrambleWord(actualWord));
-  }, [words]);
-
-  useEffect(() => {
-    setIsGameOver(errorCounter === maxAllowErrors);
-  }, [errorCounter]);
 
   //! Si ya no hay palabras para jugar, se muestra el mensaje de fin de juego
   if (words.length === 0) {
@@ -187,7 +147,7 @@ export const ScrambleWords = () => {
                     type="text"
                     value={guess}
                     onChange={(e) =>
-                      setGuess(e.target.value.toUpperCase().trim())
+                      dispatch({ type: 'SET_GUESS', payload: e.target.value })
                     }
                     placeholder="Ingresa tu palabra..."
                     className="text-center text-lg font-semibold h-12 border-2 border-indigo-200 focus:border-indigo-500 transition-colors"
@@ -209,7 +169,7 @@ export const ScrambleWords = () => {
             <div className="grid grid-cols-2 gap-4 mb-6">
               <div className="bg-linear-to-br from-green-50 to-emerald-50 rounded-lg p-4 text-center border border-green-200">
                 <div className="text-2xl font-bold text-green-600">
-                  {points} / {GAME_WORDS.length}
+                  {points} / {totalWords}
                 </div>
                 <div className="text-sm text-green-700 font-medium">Puntos</div>
               </div>

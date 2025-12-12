@@ -1,9 +1,15 @@
+import { memo } from "react";
 
 interface Props {
   subtitle: string;
 }
 
-export const MySubtitle = ({ subtitle }: Props) => {
+/**
+ * Lets you skip re-rendering a component when its props are unchanged.
+ * @param Component — The component to memoize.
+ * @param propsAreEqual — A function that will be used to determine if the props have changed.
+ */
+export const MySubtitle = memo(({ subtitle }: Props) => {
 
   console.log('MySubtitle re-render')
 
@@ -16,4 +22,4 @@ export const MySubtitle = ({ subtitle }: Props) => {
       </button>
     </>
   )
-}
+})

@@ -13,8 +13,18 @@ export const InstagromApp = () => {
     { id: 2, text: 'Me encanta <3' }
   ]);
 
-  const handleAddComment = async () => {
-    console.log('Nuevo comentario');
+  // FormData gets values from NAMED tags 
+  const handleAddComment = async (formData: FormData) => {
+    const messageText = formData.get('post-message') as string;
+
+    // Simulating latency when saving a new comment in the database
+    await new Promise(resolve => setTimeout(resolve, 3000));
+
+    setComments(prev => [...prev, {
+      id: new Date().getTime(),
+      text: messageText,
+    }])
+    console.log('Mensaje grabado');
   }
 
   return (

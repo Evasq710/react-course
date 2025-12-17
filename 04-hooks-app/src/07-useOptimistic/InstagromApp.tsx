@@ -1,4 +1,5 @@
 import { useOptimistic, useState, useTransition } from "react";
+import { toast } from "sonner";
 
 interface Comment {
   id: number;
@@ -76,13 +77,23 @@ export const InstagromApp = () => {
       await new Promise(resolve => setTimeout(resolve, 3000));
 
       if (Math.random() >= 0.5) {
+        // Simulating a successful save operation
         setComments(prev => [...prev, {
           id: new Date().getTime(),
           text: messageText,
         }])
         console.log('Mensaje grabado');
       } else {
-        console.log('Falló');
+        // Simulating a failed save operation
+        toast('Error al agregar el comentario', {
+          description: 'Intente nuevamente',
+          duration: 10_000,
+          position: 'top-right',
+          action: {
+            label: 'Cerrar',
+            onClick: () => toast.dismiss(),
+          }
+        })
       }
     });
   }

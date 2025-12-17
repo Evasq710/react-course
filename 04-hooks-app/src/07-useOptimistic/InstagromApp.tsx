@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useOptimistic, useState, useTransition } from "react";
 
 interface Comment {
   id: number;
@@ -6,25 +6,85 @@ interface Comment {
   optimistic?: boolean;
 }
 
+let lastId = 2;
+
 export const InstagromApp = () => {
+
+  /**
+   * @function useTransition: lets you render a part of the UI in the background
+   * @returns
+   * - isPending: flag that tells you wether there is a pending Transition
+   * - startTransition: function that lets you mark updates as a Transition
+   */
+  const [isPending, startTransition] = useTransition();
 
   const [commments, setComments] = useState<Comment[]>([
     { id: 1, text: 'Gran Foto!' },
     { id: 2, text: 'Me encanta <3' }
   ]);
 
+  /**
+   * @function useOptimistic: lets you show a different state while an async action is underway.
+   * It accepts some state as an argument and returns a copy of the state that can be different
+   * during the duration of an async action, such as a network request.
+   * 
+   * @param state: the value to be returned initially and whenever no action is pending
+   * @param updateFn: look below for more info
+   * 
+   * @returns optimisticState: The resulting optimistic state. It is equal to `state`, UNLESS an action is pending,
+   * in which case it is equal to the value returned by `updateFn`
+   * @returns addOptimistic: Dispatching function to call when you have an optimistic update.
+   * It takes one argument (`optmisticValue`) and will call the `updateFn` with `state` and `optimisticValue`
+   */
+  const [optimisticComments, addOpptimisticComment] = useOptimistic(
+    // state
+    commments,
+    /**
+     * @function updateFn:
+     * 
+     * @param currentState: the current state
+     * @param optimisticValue: the optimistic value passed to `addOptimistic` function
+     * 
+     * @returns: the merged value of the currentState and optimisticValue (the resulting optimistic state)
+     */
+    (currentComments, newCommentText: string) => {
+      lastId++;
+
+      return [...currentComments, {
+        id: lastId,
+        text: newCommentText,
+        optimistic: true
+      }]
+    });
+
   // FormData gets values from NAMED tags 
   const handleAddComment = async (formData: FormData) => {
     const messageText = formData.get('post-message') as string;
 
-    // Simulating latency when saving a new comment in the database
-    await new Promise(resolve => setTimeout(resolve, 3000));
+    /**
+     * Calling the dispatching function to perform an optmistic update.
+     * It takes one argument (`optmisticValue`) and will call the `updateFn` with `state` and `optimisticValue`
+     */
+    addOpptimisticComment(messageText);
 
-    setComments(prev => [...prev, {
-      id: new Date().getTime(),
-      text: messageText,
-    }])
-    console.log('Mensaje grabado');
+    /**
+     * The function passed to startTransition (action) updates some state by calling one or more set functions.
+     * React calls the `action` function with no parameters and marks all state updates as Transitions
+     */
+    startTransition(async () => {
+      // Simulating latency when saving a new comment in the database
+      await new Promise(resolve => setTimeout(resolve, 3000));
+
+      if (Math.random() >= 0.5) {
+        setComments(prev => [...prev, {
+          id: new Date().getTime(),
+          text: messageText,
+        }])
+        console.log('Mensaje grabado');
+      } else {
+        console.log('Falló');
+      }
+    });
   }
 
   return (
@@ -44,7 +104,7 @@ export const InstagromApp = () => {
       {/* Comentarios */}
       <ul className="flex flex-col items-start justify-center bg-gray-300 w-[500px] p-4">
         {
-          commments.map(comment => (
+          optimisticComments.map(comment => (
             <li key={comment.id} className="flex items-center gap-2 mb-2">
               <div className="bg-blue-500 rounded-full w-10 h-10 flex items-center justify-center">
                 <span className="text-white text-center">A</span>
@@ -74,7 +134,7 @@ export const InstagromApp = () => {
         />
         <button
           type="submit"
-          disabled={false}
+          disabled={isPending}
           className="bg-blue-500 text-white p-2 rounded-md w-full"
         >
           Enviar

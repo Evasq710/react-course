@@ -1,8 +1,9 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
-import { InstagromApp } from './07-useOptimistic/InstagromApp'
-import { Toaster } from 'sonner'
+import { ClientInformation } from './08-use-suspense/ClientInformation'
+// import { InstagromApp } from './07-useOptimistic/InstagromApp'
+// import { Toaster } from 'sonner'
 // import { MemoCounter } from './06-memos/MemoCounter'
 // import { MemoHook } from './06-memos/MemoHook'
 // import { ScrambleWords } from './05-useReducer/ScrambleWords'
@@ -15,7 +16,7 @@ import { Toaster } from 'sonner'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <Toaster />
+    {/* <Toaster /> */}
     {/* <TrafficLight /> */}
     {/* <TrafficLightWithEffect /> */}
     {/* <TrafficLightWithHook /> */}
@@ -25,6 +26,7 @@ createRoot(document.getElementById('root')!).render(
     {/* <ScrambleWords /> */}
     {/* <MemoHook /> */}
     {/* <MemoCounter /> */}
-    <InstagromApp />
+    {/* <InstagromApp /> */}
+    <ClientInformation id={100} />
   </StrictMode>,
 )

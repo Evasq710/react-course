@@ -18,6 +18,9 @@ npx shadcn@latest init
 # Adding components to project
 npx shadcn@latest add
 
+# Sonner: a toast component for React
+npm install sonner
+
 # Zod for TypeScrfipt SCHEMA VALIDATION 
 npm install zod
 

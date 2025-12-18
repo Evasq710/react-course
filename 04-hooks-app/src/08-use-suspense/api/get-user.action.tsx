@@ -7,8 +7,10 @@ export interface User {
 }
 
 export const getUserAction = async (id: number) => {
+  console.log('Función llamada');
   // Simulating latency
   await new Promise(resolve => setTimeout(resolve, 2000));
+  console.log('Función resolvió');
 
   return {
     id: id,

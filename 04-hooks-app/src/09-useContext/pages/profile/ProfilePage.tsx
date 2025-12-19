@@ -10,18 +10,20 @@ export const ProfilePage = () => {
    * until getting to a resolution.
    * In this cases, is recommended by React to use 'use' instead of the hook 'useContext'
    */
-  const { user } = use(UserContext);
+  const { user, logout } = use(UserContext);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-scree">
       <h1 className="text-4xl">Perfil del usuario</h1>
       <hr />
 
-      <pre className="my-4">
+      <pre className="my-4 w-[50%] overflow-x-auto">
         {JSON.stringify(user, null, 2)}
       </pre>
 
-      <Button variant="destructive">Salir</Button>
+      <Button onClick={logout} variant="destructive">
+        Salir
+      </Button>
     </div >
   )
 }

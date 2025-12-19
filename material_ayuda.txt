@@ -8,6 +8,9 @@ npm create vite@latest
 # Axios Installation
 npm i axios
 
+# React Router in DATA MODE | DECLARATIVE MODE (FRAMEWORK MODE requires different installation)
+npm i react-router
+
 # Tailwind CSS Installation
 npm i tailwindcss @tailwindcss/vite
 

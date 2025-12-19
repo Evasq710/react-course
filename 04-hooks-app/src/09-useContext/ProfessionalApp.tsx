@@ -1,11 +1,15 @@
 import { RouterProvider } from "react-router"
 import { appRouter } from "./router/app.router"
+import { UserContextProvider } from "./context/UserContext"
 
 
 export const ProfessionalApp = () => {
   return (
-    <div className="bg-gradient">
-      <RouterProvider router={appRouter} />
-    </div>
+    // We can do this, because UserContextProvider receives PropsWithChildren
+    <UserContextProvider>
+      <div className="bg-gradient">
+        <RouterProvider router={appRouter} />
+      </div>
+    </UserContextProvider>
   )
 }

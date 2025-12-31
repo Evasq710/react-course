@@ -4,6 +4,7 @@ import { HeroStats } from "@/heroes/components/HeroStats"
 import { HeroGrid } from "@/heroes/components/HeroGrid"
 import { useState } from "react"
 import { CustomPagination } from "@/components/custom/CustomPagination"
+import { CustomBreadcrumbs } from "@/components/custom/CustomBreadcrumbs"
 
 export const HomePage = () => {
 
@@ -20,6 +21,10 @@ export const HomePage = () => {
         <CustomJumbotron
           title="Universo de Superhéroes"
           description="Descubre, explora y gestiona tu colección de personajes favoritos"
+        />
+
+        <CustomBreadcrumbs
+          currentPage="Super Héroes"
         />
 
         {/* Stats Dashboard */}
